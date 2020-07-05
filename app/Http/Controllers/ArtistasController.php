@@ -10,9 +10,41 @@ use App\Artista;
 
 class ArtistasController extends Controller
 {
-    public function store(ArtistaRequest $request)
-    {
-        /**
+    /**
+     * Muestra los artistas
+     * 
+     * @return response
+     */
+    public function index(){
+
+        $artistas = Artista::all();
+        return view('artistas.index',[
+            'artistas' => $artistas,    
+        ]);
+    }
+
+    /**
+     * Muestra el form para añadir artistas
+     * 
+     * @return response
+     */
+    public function create(){
+        return view('artistas.create');
+    }
+
+    /**
+     * Mostrar un solo artista
+     * 
+     * @param Artista $artista
+     * @return response
+     */
+    public function show(Artista $artista){
+        return view('artistas.show',[
+            'artista' => $artista
+        ]);
+    }
+
+    /**
          * Este metodo se encarga de almacenar la informacion quie venga del form
          * 
          * Recorre la lista de archivos, verifica que sean en el formato deseado,
@@ -20,29 +52,29 @@ class ArtistasController extends Controller
          * Luego los datos son almacenados en dicho servidor y por ultimo creados en la base de datos
          * 
          * 
-         * 
+         * @var App\Http\Requests\ArtistaRequest
          * */ 
-
+    public function store(ArtistaRequest $request){
         $data = $request->validated();
         $artista = Artista::create($data);
-
+        
         if($request->hasFile('imagenes')){
             $allowedfileExtension=['jpeg','jpg','png','webp','jfif'];
-
+            
             $files = $request->file('imagenes');
-
+            
             foreach($files as $file){
-
+                
                 $filename = time() . Str::kebab($file->getClientOriginalName());
-
+                
                 $extension = $file->getClientOriginalExtension();
-
+                
                 $check=in_array($extension,$allowedfileExtension);
-
+                
                 $file->storeAs('public/images', $filename);
-
+                
                 $filename = 'storage/images/' . $filename;
-
+                
                 Imagen::create([
                     'imageable_id'=>$artista->id,
                     'imageable_type'=>'App\Artista',
@@ -50,5 +82,37 @@ class ArtistasController extends Controller
                 ]);
             }
         }
+        if($artista){
+            return redirect(route('artistas.index'));
+        }
+    }
+
+    /**
+     * Muestra el form de editar
+     * 
+     * @return response
+     */
+    public function edit(Artista $artista){
+
+    }
+
+    /**
+     *  Se encarga de modificar el artista en la base de datos
+     * 
+     * @var App\Http\Requests\ArtistaRequest;
+     * @return void
+     */
+    public function update(Artista $artista){
+
+    }
+
+    /**
+     * Se encarga de eliminar el artista de la base de datos
+     * 
+     * @param Artista $artista
+     * @return void
+     */
+    public function delete(Artista $artista){
+        
     }
 }

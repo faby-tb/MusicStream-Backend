@@ -24,3 +24,15 @@ Route::get('/user', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/artistas', 'ArtistasController@index')->name('artistas.index');
+Route::get('/artistas/create', 'ArtistasController@create')->name('artistas.create');
+Route::post('/artistas/store', 'ArtistasController@store')->name('artistas.store');
+
+Route::get('/artistas/{artista}/edit', 'ArtistasController@edit')->name('artistas.edit');
+Route::put('/artistas/update', 'ArtistasController@update')->name('artistas.update');
+
+Route::delete('/artistas/{artista}', 'ArtistasController@delete')->name('artistas.delete');
+
+Route::get('/artistas/{artista}', 'ArtistasController@show')->name('artistas.show');
+
