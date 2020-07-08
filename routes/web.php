@@ -23,7 +23,7 @@ Route::get('/user', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'ArtistasController@index')->name('home');
 
 Route::get('/artistas', 'ArtistasController@index')->name('artistas.index');
 Route::get('/artistas/create', 'ArtistasController@create')->name('artistas.create');

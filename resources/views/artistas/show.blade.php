@@ -37,23 +37,26 @@
         </div>
         
         <p>{{$artista->descripcion}}</p>
-
-		<a href="{{ route('artistas.edit', $artista)}}" class="btn btn-success mx-1"> Editar artista </a>
-		<a href="{{ route('imagenes.create', $artista)}}" class="btn btn-info mx-1"> Subir más imagenes del artista </a>
-
+		@if (Auth::check() && Auth::user()->hasAnyRole(['admin','moderador']))
+			<a href="{{ route('artistas.edit', $artista)}}" class="btn btn-success mx-1"> Editar artista </a>
+			<a href="{{ route('imagenes.create', $artista)}}" class="btn btn-primary mx-1"> Subir más imagenes del artista </a>
+		@endif
         <h3>Lista de Canciones</h3>
         <ul class="list-group list-group-flush">
 			@foreach($canciones[0]->songs as $cancion)
 				<li class="list-group-item">
 					{{$cancion->name}} 
-					@auth
+					@if (Auth::check() && Auth::user()->hasAnyRole(['admin','moderador']))
 						<a href="{{ route('canciones.edit', $cancion)}}" class="btn btn-success mx-1"> Editar información de canción </a>
+					@endif
+					@if (Auth::check() && Auth::user()->hasAnyRole(['admin']))
 						<a href="{{ route('canciones.delete', $cancion)}}" class="btn btn-danger mx-1"> Eliminar canción </a>
-					@endauth
+					@endif
 				</li>
 			@endforeach
         </ul>
+		@if (Auth::check() && Auth::user()->hasAnyRole(['admin','moderador']))
 			<a href="{{ route('canciones.create') }}" type="button" class="btn btn-primary">@lang('Insertar Canciones')</a>
-
+		@endif
 </div>
 @endsection     

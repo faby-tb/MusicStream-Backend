@@ -7,10 +7,26 @@ use Illuminate\Support\Str;
 
 use App\Cancion;
 use App\Artista;
+use Illuminate\Http\Request;
 use App\Http\Requests\EditarCancionRequest;
 
 class CancionesController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth', [
+            'except' => [
+                'index',
+                'show'
+            ],
+        ]);
+        $this->middleware('role:artistas.index,admin,moderador', [
+            'except' => [
+                'index',
+                'show'
+            ],
+        ]);
+    }
 
      /**
      * Muestra el form para añadir canciones

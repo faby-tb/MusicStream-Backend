@@ -8,10 +8,27 @@ use Illuminate\Support\Str;
 use App\Imagen;
 use App\Artista;
 use App\Cancion;
+use Illuminate\Http\Request;
 use App\Http\Requests\EditarArtistaRequest;
 
 class ArtistasController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth', [
+            'except' => [
+                'index',
+                'show'
+            ],
+        ]);
+        $this->middleware('role:artistas.index,admin,moderador', [
+            'except' => [
+                'index',
+                'show'
+            ],
+        ]);
+    }
+
     /**
      * Muestra los artistas
      * 

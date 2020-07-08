@@ -3,12 +3,12 @@
 @section('content')
 <div class="container">
     <h2>@lang('Artistas')</h2>
-    @auth
+    @if (Auth::check() && Auth::user()->hasAnyRole(['admin','moderador']))
         <a href="{{ route('artistas.create') }}" type="button" class="btn btn-primary">@lang('Insertar Artistas')</a>
         <a href="{{ route('canciones.create') }}" type="button" class="btn btn-primary">@lang('Insertar Canciones')</a>
-    @endauth
+    @endif
     <div class="row">
-    @auth
+    @if (Auth::check() && Auth::user()->hasAnyRole(['admin','moderador']))
         @foreach($artistas as $artista)
             @if($artista->photos->first())
                 <div class="col-4">
@@ -18,17 +18,19 @@
                             <h5 class="card-title">{{$artista->nombre}}</h5>
                             <a href="{{route('artistas.show',$artista)}}" class="btn btn-link">@lang('Ver más')</a>
                             <a href="{{ route('artistas.edit', $artista)}}" class="btn btn-success mx-1"> Editar </a>
+                            @if (Auth::check() && Auth::user()->hasAnyRole(['admin']))
                             <form class="mx-1" method="POST" action="{{ route('artistas.delete', $artista) }}">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger" type="submit">Eliminar</button>
                             </form>
+                            @endif
                         </div>
                     </div>
                 </div>
             @endif
         @endforeach
-    @endauth
+    @endif
     @guest
         @foreach($artistas as $artista)
             @if($artista->photos->first())
