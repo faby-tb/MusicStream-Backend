@@ -2,21 +2,48 @@
 
 @section('content')
 <div class="container">
-        <h2>@lang('Artistas')</h2>
+    <h2>@lang('Artistas')</h2>
+    @auth
         <a href="{{ route('artistas.create') }}" type="button" class="btn btn-primary">@lang('Insertar Artistas')</a>
-        <!-- {{dd($artistas)}} -->
-        <div class="row">
-
-        @foreach ($artistas as $artista)
-            <div class="col-4">
-                <div class="card">
-                    <img src="{{$artista->portada}}" class="card-img-top" alt="{{$artista->nombre}}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{$artista->nombre}}</h5>
-                        <a href="{{route('artistas.show',$libro)}}" class="btn btn-primary">Go somewhere</a>
+        <a href="{{ route('canciones.create') }}" type="button" class="btn btn-primary">@lang('Insertar Canciones')</a>
+    @endauth
+    <div class="row">
+    @auth
+        @foreach($artistas as $artista)
+            @if($artista->photos->first())
+                <div class="col-4">
+                    <div class="card">
+                        <img src="{{url($artista->photos->random()->filename)}}" class="card-img-top" alt="{{$artista->nombre}}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{$artista->nombre}}</h5>
+                            <a href="{{route('artistas.show',$artista)}}" class="btn btn-link">@lang('Ver más')</a>
+                            <a href="{{ route('artistas.edit', $artista)}}" class="btn btn-success mx-1"> Editar </a>
+                            <form class="mx-1" method="POST" action="{{ route('artistas.delete', $artista) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger" type="submit">Eliminar</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            @endif
+        @endforeach
+    @endauth
+    @guest
+        @foreach($artistas as $artista)
+            @if($artista->photos->first())
+                <div class="col-4">
+                    <div class="card">
+                        <img src="{{url($artista->photos->random()->filename)}}" class="card-img-top" alt="{{$artista->nombre}}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{$artista->nombre}}</h5>
+                            <a href="{{route('artistas.show',$artista)}}" class="btn btn-link">@lang('Ver más')</a>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        @endforeach
+    @endguest
+        
     </div>
 @endsection

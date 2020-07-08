@@ -13,9 +13,9 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
                     {{ __('You are logged in!') }}
                 </div>
+                    <a href="{{ route('artistas.index') }}" type="button" class="btn btn-primary">@lang('Ir a Artistas')</a>
             </div>
         </div>
     </div>

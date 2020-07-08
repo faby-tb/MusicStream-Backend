@@ -9,7 +9,8 @@ class Cancion extends Model
     protected $fillable = [
         'songable_id',
         'songable_type',
-        'filename'
+        'filename',
+        'name'
     ];
     public function songable(){
         return $this->morphTo();

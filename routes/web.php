@@ -36,3 +36,17 @@ Route::delete('/artistas/{artista}', 'ArtistasController@delete')->name('artista
 
 Route::get('/artistas/{artista}', 'ArtistasController@show')->name('artistas.show');
 
+
+Route::get('/canciones/create', 'CancionesController@create')->name('canciones.create');
+Route::post('/canciones/store', 'CancionesController@store')->name('canciones.store');
+
+
+Route::get('/canciones/{cancion}/edit', 'CancionesController@edit')->name('canciones.edit');
+Route::put('/canciones/update', 'CancionesController@update')->name('canciones.update');
+
+
+Route::delete('/canciones/{cancion}', 'CancionesController@delete')->name('canciones.delete');
+
+
+Route::get('/imagenes/{artista}/create', 'ImagenesController@create')->name('imagenes.create');
+Route::post('/imagenes/store', 'ImagenesController@store')->name('imagenes.store');

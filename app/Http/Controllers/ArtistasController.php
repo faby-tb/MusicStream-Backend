@@ -7,6 +7,8 @@ use Illuminate\Support\Str;
 
 use App\Imagen;
 use App\Artista;
+use App\Cancion;
+use App\Http\Requests\EditarArtistaRequest;
 
 class ArtistasController extends Controller
 {
@@ -17,7 +19,8 @@ class ArtistasController extends Controller
      */
     public function index(){
 
-        $artistas = Artista::all();
+        $artistas = Artista::with('photos')->get();
+        
         return view('artistas.index',[
             'artistas' => $artistas,    
         ]);
@@ -39,8 +42,11 @@ class ArtistasController extends Controller
      * @return response
      */
     public function show(Artista $artista){
+
+        $canciones = Artista::with('songs')->where('id', $artista['id'])->get();
         return view('artistas.show',[
-            'artista' => $artista
+            'artista' => $artista,
+            'canciones' => $canciones
         ]);
     }
 
@@ -57,7 +63,6 @@ class ArtistasController extends Controller
     public function store(ArtistaRequest $request){
         $data = $request->validated();
         $artista = Artista::create($data);
-        
         if($request->hasFile('imagenes')){
             $allowedfileExtension=['jpeg','jpg','png','webp','jfif'];
             
@@ -68,7 +73,6 @@ class ArtistasController extends Controller
                 $filename = time() . Str::kebab($file->getClientOriginalName());
                 
                 $extension = $file->getClientOriginalExtension();
-                
                 $check=in_array($extension,$allowedfileExtension);
                 
                 $file->storeAs('public/images', $filename);
@@ -93,7 +97,9 @@ class ArtistasController extends Controller
      * @return response
      */
     public function edit(Artista $artista){
-
+        return view('artistas.edit',[
+            'artista' => $artista
+        ]);
     }
 
     /**
@@ -102,8 +108,12 @@ class ArtistasController extends Controller
      * @var App\Http\Requests\ArtistaRequest;
      * @return void
      */
-    public function update(Artista $artista){
-
+    public function update(EditarArtistaRequest $request){
+        $data = $request->validated();
+        $artista = Artista::where('id', $data['id'])->update($data);
+        if($artista){
+            return redirect(route('artistas.index'));
+        }
     }
 
     /**
@@ -113,6 +123,11 @@ class ArtistasController extends Controller
      * @return void
      */
     public function delete(Artista $artista){
-        
+        Cancion::where('songable_id', $artista['id'])->delete();
+        Imagen::where('imageable_id', $artista['id'])->delete();
+        $artistaEliminado = Artista::where('id', $artista['id'])->delete();
+        if($artistaEliminado){
+            return redirect(route('artistas.index'));
+        }
     }
 }
