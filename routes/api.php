@@ -20,7 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResourse('artistas', 'ArtistasController');
+Route::apiResource('artistas', 'ArtistasController');
 
 
 Route::get('/hola', 'ArtistasController@hola');
+Route::get('/topThree', 'ArtistasController@topThree');

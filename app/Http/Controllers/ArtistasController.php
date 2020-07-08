@@ -143,4 +143,18 @@ class ArtistasController extends Controller
             )
         ));
     }
+
+    public function topThree(){
+        $artistas = Artista::with('photos')
+            ->orderBy('created_at','desc')
+            ->take(3)
+            ->get();
+
+        return json_encode(array(
+            'status'=>200,
+            'reponse'=>array(
+                'artistas'=>$artistas
+            )
+        ));
+    }
 }
