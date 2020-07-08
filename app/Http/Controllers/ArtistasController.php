@@ -18,12 +18,14 @@ class ArtistasController extends Controller
         $this->middleware('auth', [
             'except' => [
                 'index',
+                'topThree',
                 'show'
             ],
-        ]);
-        $this->middleware('role:artistas.index,admin,moderador', [
-            'except' => [
+            ]);
+            $this->middleware('role:artistas.index,admin,moderador', [
+                'except' => [
                 'index',
+                'topThree',
                 'show'
             ],
         ]);
