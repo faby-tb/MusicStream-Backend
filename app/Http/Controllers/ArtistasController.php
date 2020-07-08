@@ -130,4 +130,17 @@ class ArtistasController extends Controller
             return redirect(route('artistas.index'));
         }
     }
+
+
+
+    public function hola(){
+        $saludo='Hola Guapisimos';
+
+        return json_encode(array(
+            'status'=>200,
+            'reponse'=> array(
+                'nombre'=> $saludo
+            )
+        ));
+    }
 }
