@@ -25,6 +25,7 @@ Route::apiResource('canciones', 'CancionesController');
 
 
 Route::get('/songs', 'CancionesController@songs');
+Route::get('/artist', 'ArtistasController@artist');
 Route::get('/topThree', 'ArtistasController@topThree');
 Route::get('/carousel', 'ArtistasController@carousel');
 Route::get('/topSix', 'ImagenesController@topSix');

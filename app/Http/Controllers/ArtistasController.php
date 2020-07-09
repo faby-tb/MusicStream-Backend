@@ -20,7 +20,8 @@ class ArtistasController extends Controller
                 'index',
                 'topThree',
                 'carousel',
-                'show'
+                'show',
+                'artist'
             ],
             ]);
             $this->middleware('role:artistas.index,admin,moderador', [
@@ -28,7 +29,8 @@ class ArtistasController extends Controller
                 'index',
                 'topThree',
                 'carousel',
-                'show'
+                'show',
+                'artist'
             ],
         ]);
     }
@@ -153,22 +155,22 @@ class ArtistasController extends Controller
     }
 
 
-
-    public function hola(){
-        $saludo='Hola Guapisimos';
-
-        return json_encode(array(
-            'status'=>200,
-            'reponse'=> array(
-                'nombre'=> $saludo
-            )
-        ));
-    }
-
     public function topThree(){
         $artistas = Artista::with('photos')
             ->orderBy('created_at','desc')
             ->take(3)
+            ->get();
+
+        return json_encode(array(
+            'status'=>200,
+            'reponse'=>array(
+                'artistas'=>$artistas
+            )
+        ));
+    }
+
+    public function artist(){
+        $artistas = Artista::with('photos')
             ->get();
 
         return json_encode(array(
