@@ -19,13 +19,15 @@ class ArtistasController extends Controller
             'except' => [
                 'index',
                 'topThree',
+                'carousel',
                 'show'
             ],
             ]);
             $this->middleware('role:artistas.index,admin,moderador', [
-                'except' => [
+            'except' => [
                 'index',
                 'topThree',
+                'carousel',
                 'show'
             ],
         ]);
@@ -167,6 +169,19 @@ class ArtistasController extends Controller
         $artistas = Artista::with('photos')
             ->orderBy('created_at','desc')
             ->take(3)
+            ->get();
+
+        return json_encode(array(
+            'status'=>200,
+            'reponse'=>array(
+                'artistas'=>$artistas
+            )
+        ));
+    }
+    public function carousel(){
+        $artistas = Artista::with('photos')
+            ->orderBy('nombre')
+            ->take(10)
             ->get();
 
         return json_encode(array(

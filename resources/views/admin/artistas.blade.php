@@ -43,9 +43,3 @@
 </div>
 
 @endsection
-
-@section('scripts')
-    <script>
-        console.log('eliminar artistas');
-    </script>
-@endsection

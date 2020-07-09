@@ -8,7 +8,7 @@
         <a href="{{ route('canciones.create') }}" type="button" class="btn btn-primary">@lang('Insertar Canciones')</a>
     @endif
     <div class="row">
-    @if (Auth::check() && Auth::user()->hasAnyRole(['admin','moderador']))
+    @if (Auth::check())
         @foreach($artistas as $artista)
             @if($artista->photos->first())
                 <div class="col-4">
@@ -17,6 +17,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{$artista->nombre}}</h5>
                             <a href="{{route('artistas.show',$artista)}}" class="btn btn-link">@lang('Ver más')</a>
+                            @if (Auth::check() && Auth::user()->hasAnyRole(['admin','moderador']))
                             <a href="{{ route('artistas.edit', $artista)}}" class="btn btn-success mx-1"> Editar </a>
                             @if (Auth::check() && Auth::user()->hasAnyRole(['admin']))
                             <form class="mx-1" method="POST" action="{{ route('artistas.delete', $artista) }}">
@@ -24,6 +25,7 @@
                                 @method('DELETE')
                                 <button class="btn btn-danger" type="submit">Eliminar</button>
                             </form>
+                            @endif
                             @endif
                         </div>
                     </div>

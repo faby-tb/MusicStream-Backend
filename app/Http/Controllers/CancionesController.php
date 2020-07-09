@@ -109,7 +109,7 @@ class CancionesController extends Controller
         // $canciones = Artista::with('songs'); Test Uno
 
 
-        $canciones = Cancion::with('songable'); /** Test dos*/
+        $canciones = Cancion::with('songable')->get(); /** Test dos*/
 
         return json_encode(array(
             'status'=>200,

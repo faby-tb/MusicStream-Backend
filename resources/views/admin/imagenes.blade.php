@@ -9,6 +9,7 @@
             <tr>
                 <th>ID</th>
                 <th>Ruta</th>
+                <th>ID del artista</th>
                 <th>Agregado</th>
                 <th>Acciones</th>
             </tr>
@@ -20,6 +21,11 @@
                     <td>
                         <a href="{{ url($imagen->filename) }}">
                             {{ $imagen->filename }}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ route('artistas.show', $imagen->imageable_id) }}">
+                            {{ $imagen->imageable_id }}
                         </a>
                     </td>
                     <td>{{ $imagen->created_at->format("d F Y") }}</td>
@@ -41,8 +47,3 @@
 
 @endsection
 
-@section('scripts')
-    <script>
-        console.log('eliminar artistas');
-    </script>
-@endsection
