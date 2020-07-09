@@ -17,13 +17,15 @@ class CancionesController extends Controller
         $this->middleware('auth', [
             'except' => [
                 'index',
-                'show'
+                'show',
+                'songs'
             ],
         ]);
         $this->middleware('role:artistas.index,admin,moderador', [
             'except' => [
                 'index',
-                'show'
+                'show',
+                'songs'
             ],
         ]);
     }
@@ -99,5 +101,21 @@ class CancionesController extends Controller
         if($cancion){
             return redirect(route('artistas.index'));
         }
+    }
+
+    public function songs(){
+
+
+        // $canciones = Artista::with('songs'); Test Uno
+
+
+        $canciones = Cancion::with('songable'); /** Test dos*/
+
+        return json_encode(array(
+            'status'=>200,
+            'reponse'=>array(
+                'canciones'=>$canciones
+            )
+        ));
     }
 }

@@ -21,7 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('artistas', 'ArtistasController');
+Route::apiResource('canciones', 'CancionesController');
 
 
-Route::get('/hola', 'ArtistasController@hola');
+Route::get('/songs', 'CancionesController@songs');
 Route::get('/topThree', 'ArtistasController@topThree');
