@@ -25,3 +25,4 @@ Route::apiResource('artistas', 'ArtistasController');
 
 Route::get('/hola', 'ArtistasController@hola');
 Route::get('/topThree', 'ArtistasController@topThree');
+Route::get('/topSix', 'ImagenesController@topSix');
