@@ -34,9 +34,13 @@
                             <a type="button" class="btn btn-primary" href="{{ url($imagen->filename) }}" >
                                 <i class="fas fa-eye"></i>
                             </a>
-                            <button type="button" class="btn btn-danger btn-eliminar-imagen" data-id="{{ $imagen->id }}">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
+                            <form class="mx-1" method="POST" action="{{ route('imagenes.delete', $imagen) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-eliminar-imagen" data-id="{{ $imagen->id }}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
                         </div>
                     </td>
                 </tr>

@@ -31,9 +31,13 @@
                             <a type="button" class="btn btn-warning" href="{{ route('artistas.edit', $artista) }}">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <button type="button" class="btn btn-danger btn-eliminar-artista" data-id="{{ $artista->id }}">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
+                            <form class="mx-1" method="POST" action="{{ route('artistas.delete', $artista) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-eliminar-artista">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
                         </div>
                     </td>
                 </tr>

@@ -102,6 +102,19 @@ class CancionesController extends Controller
             return redirect(route('artistas.index'));
         }
     }
+    /**
+     * Se encarga de eliminar la cancion de la base de datos
+     * 
+     * @param Cancion $cancion
+     * @return void
+     */
+    public function delete(Cancion $cancion){
+        $cancionEliminado = Cancion::where('id', $cancion['id'])->delete();
+         
+        if($cancionEliminado){
+            return redirect(route('artistas.index'));
+        }
+    }
 
     public function songs(){
 

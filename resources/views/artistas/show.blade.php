@@ -50,7 +50,11 @@
 						<a href="{{ route('canciones.edit', $cancion)}}" class="btn btn-success mx-1"> Editar información de canción </a>
 					@endif
 					@if (Auth::check() && Auth::user()->hasAnyRole(['admin']))
-						<a href="{{ route('canciones.delete', $cancion)}}" class="btn btn-danger mx-1"> Eliminar canción </a>
+					<form class="mx-1" method="POST" action="{{ route('canciones.delete', $cancion) }}">
+						@csrf
+						@method('DELETE')
+						<button type="submit" class="btn btn-danger mx-1"> Eliminar canción </button>
+					</form>
 					@endif
 				</li>
 			@endforeach

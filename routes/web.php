@@ -51,6 +51,7 @@ Route::delete('/canciones/{cancion}', 'CancionesController@delete')->name('canci
 Route::get('/imagenes/{artista}/create', 'ImagenesController@create')->name('imagenes.create');
 Route::post('/imagenes/store', 'ImagenesController@store')->name('imagenes.store');
 
+Route::delete('/imagenes/{imagen}', 'ImagenesController@delete')->name('imagenes.delete');
 
 Route::get('/admin','DashboardController@index')->name('admin.index');
 Route::get('/admin/canciones', 'DashboardController@canciones')->name('admin.canciones');

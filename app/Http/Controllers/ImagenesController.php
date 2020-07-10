@@ -79,11 +79,21 @@ class ImagenesController extends Controller
         }
     }
 
+    /**
+     * Se encarga de eliminar la cancion de la base de datos
+     * 
+     * @param Imagen $imagen
+     * @return void
+     */
+    public function delete(Imagen $imagen){
+        $imagenEliminado = Imagen::where('id', $imagen['id'])->delete();
+         
+        if($imagenEliminado){
+            return redirect(route('artistas.index'));
+        }
+    }
     public function topSix(){
-        $imagenes = Imagen::with('imageable')
-            ->orderBy('created_at')
-            ->take(6)
-            ->get();
+        $imagenes = Imagen::all();
 
         return json_encode(array(
             'status'=>200,
